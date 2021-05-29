@@ -1,0 +1,9 @@
+{
+  "name": "web-serial-port",
+  "version": "1.0.0",
+  "description": "Web串口调试助手",
+  "main": "index.js",
+  "author": "Curtion",
+  "repository": "https://github.com/Curtion/Web-SerialPort",
+  "license": "MIT"
+}
