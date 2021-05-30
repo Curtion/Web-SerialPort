@@ -6,14 +6,12 @@ export default class App extends Component {
     super(props);
     this.state = {
       status: false,
-      port: {},
     };
     this.handleState = this.handleState.bind(this);
   }
-  handleState(status, port) {
+  handleState(status) {
     this.setState({
       status,
-      port,
     });
   }
   render() {
