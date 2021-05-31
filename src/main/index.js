@@ -29,34 +29,35 @@ export default class App extends Component {
       message.error(e.toString());
     }
   }
-  openPort(index) {
+  openPort({ portIndex: index, isOpen }) {
     // 打开串口
-    let port = this.props.ports[index];
-    port.open({ baudRate: 115200 }).then(async () => {
-      while (port.readable) {
-        const reader = port.readable.getReader();
-        try {
-          while (true) {
-            const { value, done } = await reader.read();
-            console.log(value);
-            if (done) {
-              break;
+    let port = this.state.ports[index];
+    if (!isOpen) {
+      // 关闭串口
+      port.close();
+    } else {
+      port.open({ baudRate: 115200 }).then(async () => {
+        while (port.readable) {
+          const reader = port.readable.getReader();
+          try {
+            while (true) {
+              const { value, done } = await reader.read();
+              console.log(value);
+              if (done) {
+                break;
+              }
             }
+          } catch (error) {
+            message.error(error.toString());
+          } finally {
+            reader.releaseLock();
           }
-        } catch (error) {
-          message.error(error.toString());
-        } finally {
-          reader.releaseLock();
         }
-      }
-    });
+      });
+    }
   }
   handlePortOpen(val) {
     // 处理打开串口
-    if (val === undefined) {
-      message.error("请选择端口");
-      return;
-    }
     this.setState({
       portIndex: val,
     });
@@ -71,7 +72,6 @@ export default class App extends Component {
         <div className="w-1/4 h-screen border-r-2 border-black border-opacity-20 p-3">
           <Menu
             ports={this.state.ports}
-            value={this.state.portIndex}
             handlePortOpen={this.handlePortOpen}
             handleRequestPort={this.handleRequestPort}
           />

@@ -4,13 +4,6 @@ import reportWebVitals from "./reportWebVitals";
 import App from "./app.js";
 import "antd/dist/antd.css";
 import "./index.css";
-import { message } from "antd";
-navigator.serial.addEventListener("connect", (e) => {
-  message.success("设备已连接");
-});
-navigator.serial.addEventListener("disconnect", (e) => {
-  message.error("设备已断开");
-});
 ReactDOM.render(
   <React.StrictMode>
     <App />
