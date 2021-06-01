@@ -29,31 +29,34 @@ export default class App extends Component {
       message.error(e.toString());
     }
   }
-  openPort({ portIndex: index, isOpen }) {
+  async openPort({ portIndex: index, isOpen }) {
     // 打开串口
     let port = this.state.ports[index];
     if (!isOpen) {
       // 关闭串口
-      port.close();
+      const encoder = new TextEncoder();
+      const writer = port.writable.getWriter();
+      writer.write(encoder.encode("A long message that will take..."));
+      await writer.close();
+      await port.close();
     } else {
-      port.open({ baudRate: 115200 }).then(async () => {
-        while (port.readable) {
-          const reader = port.readable.getReader();
-          try {
-            while (true) {
-              const { value, done } = await reader.read();
-              console.log(value);
-              if (done) {
-                break;
-              }
+      await port.open({ baudRate: 115200 });
+      while (port.readable) {
+        const reader = port.readable.getReader();
+        try {
+          while (true) {
+            const { value, done } = await reader.read();
+            console.log(value);
+            if (done) {
+              break;
             }
-          } catch (error) {
-            message.error(error.toString());
-          } finally {
-            reader.releaseLock();
           }
+        } catch (error) {
+          message.error(error.toString());
+        } finally {
+          reader.releaseLock();
         }
-      });
+      }
     }
   }
   handlePortOpen(val) {
