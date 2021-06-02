@@ -3,6 +3,9 @@ import { Select, Button, AutoComplete } from "antd";
 import USBDevice from "../../assets/usb.json";
 import { message } from "antd";
 const { Option } = Select;
+let reader;
+let closed;
+let keepReading;
 const baudRate = [
   { value: "110" },
   { value: "300" },
@@ -33,11 +36,13 @@ export default class Menu extends Component {
       stopBits: "1",
       parity: "none",
       flowControl: "none",
-      isOpen: false,
+      readUntilClosed: function () {},
     };
     this.option = this.option.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.setSerial = this.setSerial.bind(this);
+    this.openPort = this.openPort.bind(this);
+    this.readUntilClosed = this.readUntilClosed.bind(this);
   }
   option() {
     // 串口列表
@@ -75,17 +80,55 @@ export default class Menu extends Component {
       message.error("请选择串口");
       return;
     }
-    if (!this.state.isOpen) {
-      this.props.handlePortOpen({
-        portIndex: this.state.portIndex,
-        isOpen: !this.state.isOpen,
-      });
+    this.openPort(this.state.portIndex, !this.props.isOpen);
+  }
+  async readUntilClosed(portIndex) {
+    let port = this.props.ports[portIndex];
+    while (port.readable && keepReading) {
+      reader = port.readable.getReader();
+      try {
+        while (true) {
+          const { value, done } = await reader.read();
+          console.log(new TextDecoder().decode(value));
+          if (done) {
+            break;
+          }
+        }
+      } catch (error) {
+        message.error(error.toString());
+      } finally {
+        reader.releaseLock();
+      }
     }
-    this.setState((state) => {
-      return {
-        isOpen: !state.isOpen,
-      };
-    });
+    await port.close();
+  }
+  async openPort(portIndex, isOpen) {
+    // 打开串口
+    let port = this.props.ports[portIndex];
+    if (!isOpen) {
+      // 关闭串口
+      keepReading = false;
+      reader.cancel();
+      await closed;
+      this.props.handlePortOpen({
+        portIndex,
+        isOpen,
+      });
+    } else {
+      await port.open({
+        baudRate: this.state.baudRate,
+        dataBits: this.state.dataBits,
+        stopBits: this.state.stopBits,
+        parity: this.state.parity,
+        flowControl: this.state.flowControl,
+      });
+      this.props.handlePortOpen({
+        portIndex,
+        isOpen,
+      });
+      keepReading = true;
+      closed = this.readUntilClosed(portIndex);
+    }
   }
   render() {
     return (
@@ -97,7 +140,7 @@ export default class Menu extends Component {
             className="flex-1 h-8 cursor-pointer"
             placeholder="请选择串口"
             allowClear
-            disabled={this.state.isOpen}
+            disabled={this.props.isOpen}
           >
             {this.option()}
           </Select>
@@ -111,7 +154,7 @@ export default class Menu extends Component {
             placeholder="请输入波特率"
             defaultValue="115200"
             allowClear
-            disabled={this.state.isOpen}
+            disabled={this.props.isOpen}
           />
         </div>
         <div className="flex mt-2">
@@ -119,7 +162,7 @@ export default class Menu extends Component {
           <Select
             className="flex-1 h-8"
             defaultValue="8"
-            disabled={this.state.isOpen}
+            disabled={this.props.isOpen}
             onChange={this.handleChange.bind(this, "dataBits")}
           >
             <Option value="7">7</Option>
@@ -131,7 +174,7 @@ export default class Menu extends Component {
           <Select
             className="flex-1 h-8"
             defaultValue="1"
-            disabled={this.state.isOpen}
+            disabled={this.props.isOpen}
             onChange={this.handleChange.bind(this, "stopBits")}
           >
             <Option value="1">1</Option>
@@ -143,7 +186,7 @@ export default class Menu extends Component {
           <Select
             className="flex-1 h-8"
             defaultValue="None"
-            disabled={this.state.isOpen}
+            disabled={this.props.isOpen}
             onChange={this.handleChange.bind(this, "parity")}
           >
             <Option value="none">None</Option>
@@ -156,7 +199,7 @@ export default class Menu extends Component {
           <Select
             className="flex-1 h-8"
             defaultValue="None"
-            disabled={this.state.isOpen}
+            disabled={this.props.isOpen}
             onChange={this.handleChange.bind(this, "flowControl")}
           >
             <Option value="none">None</Option>
@@ -168,9 +211,9 @@ export default class Menu extends Component {
             type="primary"
             className="flex-grow mr-3"
             onClick={this.setSerial}
-            danger={this.state.isOpen}
+            danger={this.props.isOpen}
           >
-            {this.state.isOpen ? "关闭串口" : "打开串口"}
+            {this.props.isOpen ? "关闭串口" : "打开串口"}
           </Button>
           <Button type="dashed" onClick={this.props.handleRequestPort}>
             新增授权

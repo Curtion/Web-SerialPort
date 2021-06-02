@@ -7,8 +7,8 @@ export default class App extends Component {
     this.state = {
       portIndex: undefined,
       ports: [],
+      isOpen: false,
     };
-    this.openPort = this.openPort.bind(this);
     this.handlePortOpen = this.handlePortOpen.bind(this);
     this.getPorts = this.getPorts.bind(this);
     this.handleRequestPort = this.handleRequestPort.bind(this);
@@ -29,42 +29,12 @@ export default class App extends Component {
       message.error(e.toString());
     }
   }
-  async openPort({ portIndex: index, isOpen }) {
-    // 打开串口
-    let port = this.state.ports[index];
-    if (!isOpen) {
-      // 关闭串口
-      const encoder = new TextEncoder();
-      const writer = port.writable.getWriter();
-      writer.write(encoder.encode("A long message that will take..."));
-      await writer.close();
-      await port.close();
-    } else {
-      await port.open({ baudRate: 115200 });
-      while (port.readable) {
-        const reader = port.readable.getReader();
-        try {
-          while (true) {
-            const { value, done } = await reader.read();
-            console.log(value);
-            if (done) {
-              break;
-            }
-          }
-        } catch (error) {
-          message.error(error.toString());
-        } finally {
-          reader.releaseLock();
-        }
-      }
-    }
-  }
-  handlePortOpen(val) {
+  handlePortOpen({ portIndex, isOpen }) {
     // 处理打开串口
     this.setState({
-      portIndex: val,
+      portIndex,
+      isOpen,
     });
-    this.openPort(val);
   }
   componentDidMount() {
     this.getPorts();
@@ -75,6 +45,7 @@ export default class App extends Component {
         <div className="w-1/4 h-screen border-r-2 border-black border-opacity-20 p-3">
           <Menu
             ports={this.state.ports}
+            isOpen={this.state.isOpen}
             handlePortOpen={this.handlePortOpen}
             handleRequestPort={this.handleRequestPort}
           />
