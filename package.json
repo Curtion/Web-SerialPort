@@ -5,6 +5,7 @@
   "main": "index.js",
   "author": "Curtion",
   "repository": "https://github.com/Curtion/Web-SerialPort",
+  "homepage": "https://curtion.github.io/Web-SerialPort/",
   "license": "MIT",
   "private": true,
   "dependencies": {
@@ -20,8 +21,8 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "cross-env GENERATE_SOURCEMAP=false&&craco build",
-    "push": "gh-pages -d build",
+    "build": "cross-env GENERATE_SOURCEMAP=false && craco build",
+    "push": "yarn build && gh-pages -d build",
     "test": "craco test",
     "eject": "react-scripts eject"
   },
