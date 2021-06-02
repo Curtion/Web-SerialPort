@@ -36,6 +36,9 @@ export default class App extends Component {
       isOpen,
     });
   }
+  readText(text) {
+    console.log(text);
+  }
   componentDidMount() {
     this.getPorts();
   }
@@ -48,6 +51,7 @@ export default class App extends Component {
             isOpen={this.state.isOpen}
             handlePortOpen={this.handlePortOpen}
             handleRequestPort={this.handleRequestPort}
+            readText={this.readText}
           />
         </div>
         <div className="w-3/4 h-screen">

@@ -89,7 +89,7 @@ export default class Menu extends Component {
       try {
         while (true) {
           const { value, done } = await reader.read();
-          console.log(new TextDecoder().decode(value));
+          this.props.readText(new TextDecoder().decode(value));
           if (done) {
             break;
           }
