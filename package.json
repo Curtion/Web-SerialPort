@@ -21,6 +21,7 @@
   "scripts": {
     "start": "craco start",
     "build": "cross-env GENERATE_SOURCEMAP=false&&craco build",
+    "push": "gh-pages -d build",
     "test": "craco test",
     "eject": "react-scripts eject"
   },
@@ -47,6 +48,7 @@
     "@tailwindcss/postcss7-compat": "^2.1.2",
     "autoprefixer": "9",
     "cross-env": "^7.0.3",
+    "gh-pages": "^3.2.0",
     "postcss": "7",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }
