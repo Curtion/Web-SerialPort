@@ -21,12 +21,13 @@ export default class Write extends Component {
           <Radio value={2}>HEX</Radio>
         </Radio.Group>
         <Button
-          type={this.props.isScroll ? "dashed" : "primary"}
+          type="dashed"
           className="mt-2"
           onClick={this.props.handleScroll}
+          danger={!Boolean(this.props.isScroll)}
           block
         >
-          暂停滚动
+          {this.props.isScroll ? "暂停滚动" : "继续滚动"}
         </Button>
       </Card>
     );
