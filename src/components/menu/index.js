@@ -38,13 +38,18 @@ export default class Menu extends Component {
       stopBits: "1",
       parity: "none",
       flowControl: "none",
-      readUntilClosed: function () {},
+      writeType: 1,
+      readType: 1,
+      isScroll: true,
     };
     this.option = this.option.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.setSerial = this.setSerial.bind(this);
     this.openPort = this.openPort.bind(this);
     this.readUntilClosed = this.readUntilClosed.bind(this);
+    this.handleWriteType = this.handleWriteType.bind(this);
+    this.handleReadType = this.handleReadType.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   }
   option() {
     // 串口列表
@@ -75,6 +80,19 @@ export default class Menu extends Component {
   }
   handleChange(type, val) {
     this.setState({ [type]: val });
+  }
+  handleWriteType(writeType) {
+    this.setState({ writeType });
+  }
+  handleReadType(readType) {
+    this.setState({ readType });
+  }
+  handleScroll() {
+    this.setState((state) => {
+      return {
+        isScroll: !state.isScroll,
+      };
+    });
   }
   setSerial() {
     // 设置串口
@@ -222,8 +240,16 @@ export default class Menu extends Component {
               新增授权
             </Button>
           </div>
-          <Read />
-          <Write />
+          <Read
+            readType={this.state.readType}
+            handleReadType={this.handleReadType}
+            isScroll={this.state.isScroll}
+            handleScroll={this.handleScroll}
+          />
+          <Write
+            writeType={this.state.writeType}
+            handleWriteType={this.handleWriteType}
+          />
         </div>
       </>
     );

@@ -1,8 +1,12 @@
 import { Component } from "react";
 import { Card, Radio, Button } from "antd";
 export default class Write extends Component {
+  constructor(props) {
+    super(props);
+    this.onChange = this.onChange.bind(this);
+  }
   onChange(e) {
-    console.log(e.target.value);
+    this.props.handleReadType(e.target.value);
   }
   render() {
     return (
@@ -12,11 +16,16 @@ export default class Write extends Component {
         size="small"
         className="mt-2"
       >
-        <Radio.Group onChange={this.onChange} value={1}>
-          <Radio value={1}>HEX</Radio>
-          <Radio value={2}>ASCII</Radio>
+        <Radio.Group onChange={this.onChange} value={this.props.readType}>
+          <Radio value={1}>ASCII</Radio>
+          <Radio value={2}>HEX</Radio>
         </Radio.Group>
-        <Button type="primary" className="mt-2" block>
+        <Button
+          type={this.props.isScroll ? "dashed" : "primary"}
+          className="mt-2"
+          onClick={this.props.handleScroll}
+          block
+        >
           暂停滚动
         </Button>
       </Card>
