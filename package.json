@@ -20,7 +20,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "craco start",
+    "serve": "craco start",
     "build": "cross-env GENERATE_SOURCEMAP=false && craco build",
     "push": "yarn build && gh-pages -d build",
     "test": "craco test",

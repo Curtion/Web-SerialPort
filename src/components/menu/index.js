@@ -2,6 +2,8 @@ import { Component } from "react";
 import { Select, Button, AutoComplete } from "antd";
 import USBDevice from "../../assets/usb.json";
 import { message } from "antd";
+import Write from "./write.js";
+import Read from "./read.js";
 const { Option } = Select;
 let reader;
 let closed;
@@ -51,7 +53,7 @@ export default class Menu extends Component {
       if (usbProductId === undefined || usbVendorId === undefined) {
         return (
           <Option value={index} key={index}>
-            未知设备({index}))
+            未知设备({index})
           </Option>
         );
       }
@@ -133,91 +135,95 @@ export default class Menu extends Component {
   render() {
     return (
       <>
-        <div className="flex">
-          <div className="flex justify-center items-center">串口：</div>
-          <Select
-            onChange={this.handleChange.bind(this, "portIndex")}
-            className="flex-1 h-8 cursor-pointer"
-            placeholder="请选择串口"
-            allowClear
-            disabled={this.props.isOpen}
-          >
-            {this.option()}
-          </Select>
-        </div>
-        <div className="flex mt-2">
-          <div className="flex justify-center items-center">波特率：</div>
-          <AutoComplete
-            onChange={this.handleChange.bind(this, "baudRate")}
-            className="flex-1 h-8"
-            options={baudRate}
-            placeholder="请输入波特率"
-            defaultValue="115200"
-            allowClear
-            disabled={this.props.isOpen}
-          />
-        </div>
-        <div className="flex mt-2">
-          <div className="flex justify-center items-center">数据位：</div>
-          <Select
-            className="flex-1 h-8"
-            defaultValue="8"
-            disabled={this.props.isOpen}
-            onChange={this.handleChange.bind(this, "dataBits")}
-          >
-            <Option value="7">7</Option>
-            <Option value="8">8</Option>
-          </Select>
-        </div>
-        <div className="flex mt-2">
-          <div className="flex justify-center items-center">停止位：</div>
-          <Select
-            className="flex-1 h-8"
-            defaultValue="1"
-            disabled={this.props.isOpen}
-            onChange={this.handleChange.bind(this, "stopBits")}
-          >
-            <Option value="1">1</Option>
-            <Option value="2">2</Option>
-          </Select>
-        </div>
-        <div className="flex mt-2">
-          <div className="flex justify-center items-center">校验位：</div>
-          <Select
-            className="flex-1 h-8"
-            defaultValue="None"
-            disabled={this.props.isOpen}
-            onChange={this.handleChange.bind(this, "parity")}
-          >
-            <Option value="none">None</Option>
-            <Option value="even">Even</Option>
-            <Option value="odd">Odd</Option>
-          </Select>
-        </div>
-        <div className="flex mt-2">
-          <div className="flex justify-center items-center">流控制：</div>
-          <Select
-            className="flex-1 h-8"
-            defaultValue="None"
-            disabled={this.props.isOpen}
-            onChange={this.handleChange.bind(this, "flowControl")}
-          >
-            <Option value="none">None</Option>
-            <Option value="hardware">HardWare</Option>
-          </Select>
-        </div>
-        <div className="flex mt-2 justify-between">
-          <Button
-            type="primary"
-            className="flex-grow mr-3"
-            onClick={this.setSerial}
-            danger={this.props.isOpen}
-          >
-            {this.props.isOpen ? "关闭串口" : "打开串口"}
-          </Button>
-          <Button type="dashed" onClick={this.props.handleRequestPort}>
-            新增授权
-          </Button>
+        <div>
+          <div className="flex">
+            <div className="flex justify-center items-center">串口：</div>
+            <Select
+              onChange={this.handleChange.bind(this, "portIndex")}
+              className="flex-1 h-8 cursor-pointer"
+              placeholder="请选择串口"
+              allowClear
+              disabled={this.props.isOpen}
+            >
+              {this.option()}
+            </Select>
+          </div>
+          <div className="flex mt-2">
+            <div className="flex justify-center items-center">波特率：</div>
+            <AutoComplete
+              onChange={this.handleChange.bind(this, "baudRate")}
+              className="flex-1 h-8"
+              options={baudRate}
+              placeholder="请输入波特率"
+              defaultValue="115200"
+              allowClear
+              disabled={this.props.isOpen}
+            />
+          </div>
+          <div className="flex mt-2">
+            <div className="flex justify-center items-center">数据位：</div>
+            <Select
+              className="flex-1 h-8"
+              defaultValue="8"
+              disabled={this.props.isOpen}
+              onChange={this.handleChange.bind(this, "dataBits")}
+            >
+              <Option value="7">7</Option>
+              <Option value="8">8</Option>
+            </Select>
+          </div>
+          <div className="flex mt-2">
+            <div className="flex justify-center items-center">停止位：</div>
+            <Select
+              className="flex-1 h-8"
+              defaultValue="1"
+              disabled={this.props.isOpen}
+              onChange={this.handleChange.bind(this, "stopBits")}
+            >
+              <Option value="1">1</Option>
+              <Option value="2">2</Option>
+            </Select>
+          </div>
+          <div className="flex mt-2">
+            <div className="flex justify-center items-center">校验位：</div>
+            <Select
+              className="flex-1 h-8"
+              defaultValue="None"
+              disabled={this.props.isOpen}
+              onChange={this.handleChange.bind(this, "parity")}
+            >
+              <Option value="none">None</Option>
+              <Option value="even">Even</Option>
+              <Option value="odd">Odd</Option>
+            </Select>
+          </div>
+          <div className="flex mt-2">
+            <div className="flex justify-center items-center">流控制：</div>
+            <Select
+              className="flex-1 h-8"
+              defaultValue="None"
+              disabled={this.props.isOpen}
+              onChange={this.handleChange.bind(this, "flowControl")}
+            >
+              <Option value="none">None</Option>
+              <Option value="hardware">HardWare</Option>
+            </Select>
+          </div>
+          <div className="flex mt-2 justify-between">
+            <Button
+              type="primary"
+              className="flex-grow mr-3"
+              onClick={this.setSerial}
+              danger={this.props.isOpen}
+            >
+              {this.props.isOpen ? "关闭串口" : "打开串口"}
+            </Button>
+            <Button type="dashed" onClick={this.props.handleRequestPort}>
+              新增授权
+            </Button>
+          </div>
+          <Read />
+          <Write />
         </div>
       </>
     );
