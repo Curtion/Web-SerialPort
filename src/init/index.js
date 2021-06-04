@@ -4,23 +4,34 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.handleGetPort = this.handleGetPort.bind(this);
+    this.getPorts = this.getPorts.bind(this);
   }
   async handleGetPort() {
     // 客户端授权
     try {
-      let port = await navigator.serial.requestPort();
-      this.props.handleState(true, [port]);
+      await navigator.serial.requestPort();
+      this.props.handleState(true);
     } catch (e) {
       message.error(e.toString());
     }
   }
-  componentDidMount() {
-    // 判断是否进行过授权
+  async getPorts() {
     navigator.serial.getPorts().then(async (ports) => {
       if (ports.length > 0) {
-        this.props.handleState(true, ports);
+        this.props.handleState(true);
       }
     });
+  }
+  componentDidMount() {
+    // 判断是否进行过授权
+    navigator.serial.addEventListener("connect", (e) => {
+      message.success("设备已连接");
+      this.getPorts();
+    });
+    navigator.serial.addEventListener("disconnect", (e) => {
+      message.error("设备已断开");
+    });
+    this.getPorts();
   }
   render() {
     return (

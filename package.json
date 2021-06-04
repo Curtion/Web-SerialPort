@@ -5,6 +5,7 @@
   "main": "index.js",
   "author": "Curtion",
   "repository": "https://github.com/Curtion/Web-SerialPort",
+  "homepage": "https://curtion.github.io/Web-SerialPort/",
   "license": "MIT",
   "private": true,
   "dependencies": {
@@ -19,8 +20,9 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
+    "serve": "craco start",
+    "build": "cross-env GENERATE_SOURCEMAP=false && craco build",
+    "push": "yarn build && gh-pages -d build",
     "test": "craco test",
     "eject": "react-scripts eject"
   },
@@ -46,6 +48,8 @@
     "@craco/craco": "^6.1.2",
     "@tailwindcss/postcss7-compat": "^2.1.2",
     "autoprefixer": "9",
+    "cross-env": "^7.0.3",
+    "gh-pages": "^3.2.0",
     "postcss": "7",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }
