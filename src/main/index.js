@@ -49,8 +49,7 @@ export default class App extends Component {
     });
   }
   readText(value) {
-    let newValue = this.state.readValue.concat(value);
-    console.log(newValue);
+    let newValue = [...this.state.readValue, ...Array.from(value)];
     this.setState({
       readValue: newValue,
     });
@@ -75,8 +74,8 @@ export default class App extends Component {
           />
         </div>
         <div className="w-3/4 h-screen">
-          <div className="w-auto h-4/5 border-b-2 border-black border-opacity-20 p-3">
-            <Read value={this.state.readValue} />
+          <div className="w-auto h-4/5 border-b-2 border-black border-opacity-20 p-3 overflow-x-hidden overflow-y-auto">
+            <Read value={this.state.readValue} readType={this.state.readType} />
           </div>
           <div className="w-auto h-1/5 p-3"></div>
         </div>

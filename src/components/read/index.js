@@ -1,11 +1,20 @@
 import { Component } from "react";
 export default class Read extends Component {
   renderLi() {
-    let li = [];
-    for (let item of this.props.value) {
-      li.push(<div>{new TextDecoder().decode(item)}</div>);
-    }
-    return li;
+    const type = this.props.readType;
+    let text = "";
+    this.props.value.forEach((item, index) => {
+      if (type === 1) {
+        text = item;
+      } else if (type === 2) {
+        if (item === 10 || item === 13) {
+          text = text + "\r\n";
+        } else {
+          text = text + item.toString(16).toLocaleUpperCase();
+        }
+      }
+    });
+    return text;
   }
   render() {
     return (
