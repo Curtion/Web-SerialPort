@@ -34,6 +34,7 @@ export default class Menu extends Component {
   option() {
     return this.props.ports.map((port, index) => {
       const { usbProductId, usbVendorId } = port.getInfo();
+      console.log(usbProductId, usbVendorId);
       const usbVendor = USBDevice.filter(
         (item) => parseInt(item.vendor, 16) === usbVendorId
       );
