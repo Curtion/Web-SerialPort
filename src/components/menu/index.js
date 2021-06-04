@@ -38,9 +38,6 @@ export default class Menu extends Component {
       stopBits: "1",
       parity: "none",
       flowControl: "none",
-      writeType: 1,
-      readType: 1,
-      isScroll: true,
     };
     this.option = this.option.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -82,17 +79,13 @@ export default class Menu extends Component {
     this.setState({ [type]: val });
   }
   handleWriteType(writeType) {
-    this.setState({ writeType });
+    this.props.handleChildrenChange("writeType", writeType);
   }
   handleReadType(readType) {
-    this.setState({ readType });
+    this.props.handleChildrenChange("readType", readType);
   }
   handleScroll() {
-    this.setState((state) => {
-      return {
-        isScroll: !state.isScroll,
-      };
-    });
+    this.props.handleChildrenChange("isScroll", !this.props.isScroll);
   }
   setSerial() {
     // 设置串口
@@ -109,7 +102,7 @@ export default class Menu extends Component {
       try {
         while (true) {
           const { value, done } = await reader.read();
-          this.props.readText(new TextDecoder().decode(value));
+          this.props.readText(value);
           if (done) {
             break;
           }
@@ -241,13 +234,13 @@ export default class Menu extends Component {
             </Button>
           </div>
           <Read
-            readType={this.state.readType}
+            readType={this.props.readType}
             handleReadType={this.handleReadType}
-            isScroll={this.state.isScroll}
+            isScroll={this.props.isScroll}
             handleScroll={this.handleScroll}
           />
           <Write
-            writeType={this.state.writeType}
+            writeType={this.props.writeType}
             handleWriteType={this.handleWriteType}
           />
         </div>
