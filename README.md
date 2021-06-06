@@ -4,4 +4,4 @@
 
 项目使用了 React+AntD+TailWindCSS
 
-在线体验： [https://curtion.github.io/web-serialport/](https://curtion.github.io/web-serialport/)
+在线体验： [https://curtion.github.io/Web-SerialPort/](https://curtion.github.io/Web-SerialPort/)
