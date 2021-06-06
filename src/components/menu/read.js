@@ -29,6 +29,14 @@ export default class Write extends Component {
         >
           {this.props.isScroll ? "暂停滚动" : "继续滚动"}
         </Button>
+        <Button
+          type="dashed"
+          className="mt-2"
+          onClick={this.props.handleClear}
+          block
+        >
+          清空窗口
+        </Button>
       </Card>
     );
   }

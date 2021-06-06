@@ -6,7 +6,7 @@ export default class Read extends Component {
     const readType = this.props.readType;
     return this.props.value.map((items, index) => {
       const item = items.value;
-      const type = items.type;
+      const type = items.type; // 1接收，2发送
       let body = [];
       if (item !== undefined) {
         let strArr = [];
@@ -29,7 +29,7 @@ export default class Read extends Component {
           }
           return item;
         });
-        if (type === 2) {
+        if (typeof strArr[strArr.length - 1] === "string") {
           strArr.push(<br key={1} />);
         }
         body.push(strArr);

@@ -21,6 +21,7 @@ export default class App extends Component {
     this.handleChildrenChange = this.handleChildrenChange.bind(this);
     this.readText = this.readText.bind(this);
     this.writeText = this.writeText.bind(this);
+    this.handleClear = this.handleClear.bind(this);
   }
   async getPorts() {
     // 获取已授权的全部串口
@@ -50,7 +51,23 @@ export default class App extends Component {
       [type]: value,
     });
   }
+  portWrite(value) {
+    return new Promise(async (resolve, reject) => {
+      if (!this.state.isOpen) {
+        message.error("串口未打开");
+        reject();
+        return;
+      } else {
+        let port = this.state.ports[this.state.portIndex];
+        const writer = port.writable.getWriter();
+        await writer.write(new Uint8Array(value));
+        writer.releaseLock();
+        resolve(value);
+      }
+    });
+  }
   readText(value) {
+    console.log(value, "读取");
     let newValue = this.state.readValue.concat({
       value,
       type: 1,
@@ -60,12 +77,20 @@ export default class App extends Component {
     });
   }
   writeText(value) {
-    let newValue = this.state.readValue.concat({
-      value: value,
-      type: 2,
+    console.log(value, "写入");
+    this.portWrite(value).then((res) => {
+      let newValue = this.state.readValue.concat({
+        value: res,
+        type: 2,
+      });
+      this.setState({
+        readValue: newValue,
+      });
     });
+  }
+  handleClear() {
     this.setState({
-      readValue: newValue,
+      readValue: [],
     });
   }
   componentDidMount() {
@@ -85,6 +110,7 @@ export default class App extends Component {
             handleRequestPort={this.handleRequestPort}
             readText={this.readText}
             handleChildrenChange={this.handleChildrenChange}
+            handleClear={this.handleClear}
           />
         </div>
         <div className="w-3/4 h-screen">

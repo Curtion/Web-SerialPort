@@ -29,7 +29,6 @@ export default class Write extends Component {
       }
     } else if (writeType === 2) {
       // HEX
-      console.log(/^[0-9A-Fa-f]+$/.test(value));
       if (/^[0-9A-Fa-f]+$/.test(value) && value.length % 2 === 0) {
         for (let i = 0; i < value.length; i = i + 2) {
           arr.push(parseInt(value.substring(i, i + 2), 16));

@@ -238,6 +238,7 @@ export default class Menu extends Component {
             handleReadType={this.handleReadType}
             isScroll={this.props.isScroll}
             handleScroll={this.handleScroll}
+            handleClear={this.props.handleClear}
           />
           <Write
             writeType={this.props.writeType}
