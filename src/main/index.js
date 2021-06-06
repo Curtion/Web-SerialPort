@@ -49,7 +49,7 @@ export default class App extends Component {
     });
   }
   readText(value) {
-    let newValue = [...this.state.readValue, ...Array.from(value)];
+    let newValue = this.state.readValue.concat(value);
     this.setState({
       readValue: newValue,
     });
