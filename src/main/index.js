@@ -1,6 +1,7 @@
 import { Component } from "react";
 import Menu from "../components/menu/index.js";
 import Read from "../components/read/index.js";
+import Write from "../components/write/index.js";
 import { message } from "antd";
 export default class App extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ export default class App extends Component {
     this.handleRequestPort = this.handleRequestPort.bind(this);
     this.handleChildrenChange = this.handleChildrenChange.bind(this);
     this.readText = this.readText.bind(this);
+    this.writeText = this.writeText.bind(this);
   }
   async getPorts() {
     // 获取已授权的全部串口
@@ -49,7 +51,19 @@ export default class App extends Component {
     });
   }
   readText(value) {
-    let newValue = this.state.readValue.concat(value);
+    let newValue = this.state.readValue.concat({
+      value,
+      type: 1,
+    });
+    this.setState({
+      readValue: newValue,
+    });
+  }
+  writeText(value) {
+    let newValue = this.state.readValue.concat({
+      value: value,
+      type: 2,
+    });
     this.setState({
       readValue: newValue,
     });
@@ -75,9 +89,18 @@ export default class App extends Component {
         </div>
         <div className="w-3/4 h-screen">
           <div className="w-auto h-4/5 border-b-2 border-black border-opacity-20 p-3 overflow-x-hidden overflow-y-auto">
-            <Read value={this.state.readValue} readType={this.state.readType} />
+            <Read
+              value={this.state.readValue}
+              readType={this.state.readType}
+              isScroll={this.state.isScroll}
+            />
           </div>
-          <div className="w-auto h-1/5 p-3"></div>
+          <div className="w-auto h-1/5 p-3">
+            <Write
+              writeText={this.writeText}
+              writeType={this.state.writeType}
+            />
+          </div>
         </div>
       </div>
     );
