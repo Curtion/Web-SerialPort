@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/Web-SerialPort/static/css/main.d4608009.chunk.css",
-    "main.js": "/Web-SerialPort/static/js/main.a9a72f71.chunk.js",
-    "main.js.map": "/Web-SerialPort/static/js/main.a9a72f71.chunk.js.map",
-    "runtime-main.js": "/Web-SerialPort/static/js/runtime-main.d0fbf990.js",
-    "runtime-main.js.map": "/Web-SerialPort/static/js/runtime-main.d0fbf990.js.map",
+    "main.css": "/Web-SerialPort/static/css/main.1fe0d020.chunk.css",
+    "main.js": "/Web-SerialPort/static/js/main.16a894a3.chunk.js",
+    "main.js.map": "/Web-SerialPort/static/js/main.16a894a3.chunk.js.map",
+    "runtime-main.js": "/Web-SerialPort/static/js/runtime-main.4f825e84.js",
+    "runtime-main.js.map": "/Web-SerialPort/static/js/runtime-main.4f825e84.js.map",
     "static/css/2.b1cac1c8.chunk.css": "/Web-SerialPort/static/css/2.b1cac1c8.chunk.css",
-    "static/js/2.4595bcbc.chunk.js": "/Web-SerialPort/static/js/2.4595bcbc.chunk.js",
-    "static/js/2.4595bcbc.chunk.js.map": "/Web-SerialPort/static/js/2.4595bcbc.chunk.js.map",
-    "static/js/3.5371b6cd.chunk.js": "/Web-SerialPort/static/js/3.5371b6cd.chunk.js",
-    "static/js/3.5371b6cd.chunk.js.map": "/Web-SerialPort/static/js/3.5371b6cd.chunk.js.map",
+    "static/js/2.9aec85ea.chunk.js": "/Web-SerialPort/static/js/2.9aec85ea.chunk.js",
+    "static/js/2.9aec85ea.chunk.js.map": "/Web-SerialPort/static/js/2.9aec85ea.chunk.js.map",
+    "static/js/3.fe9da742.chunk.js": "/Web-SerialPort/static/js/3.fe9da742.chunk.js",
+    "static/js/3.fe9da742.chunk.js.map": "/Web-SerialPort/static/js/3.fe9da742.chunk.js.map",
     "index.html": "/Web-SerialPort/index.html",
     "static/css/2.b1cac1c8.chunk.css.map": "/Web-SerialPort/static/css/2.b1cac1c8.chunk.css.map",
-    "static/css/main.d4608009.chunk.css.map": "/Web-SerialPort/static/css/main.d4608009.chunk.css.map",
-    "static/js/2.4595bcbc.chunk.js.LICENSE.txt": "/Web-SerialPort/static/js/2.4595bcbc.chunk.js.LICENSE.txt"
+    "static/css/main.1fe0d020.chunk.css.map": "/Web-SerialPort/static/css/main.1fe0d020.chunk.css.map",
+    "static/js/2.9aec85ea.chunk.js.LICENSE.txt": "/Web-SerialPort/static/js/2.9aec85ea.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.d0fbf990.js",
+    "static/js/runtime-main.4f825e84.js",
     "static/css/2.b1cac1c8.chunk.css",
-    "static/js/2.4595bcbc.chunk.js",
-    "static/css/main.d4608009.chunk.css",
-    "static/js/main.a9a72f71.chunk.js"
+    "static/js/2.9aec85ea.chunk.js",
+    "static/css/main.1fe0d020.chunk.css",
+    "static/js/main.16a894a3.chunk.js"
   ]
 }
