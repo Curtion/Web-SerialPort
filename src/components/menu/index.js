@@ -65,7 +65,16 @@ export default class Menu extends Component {
       let usbProduct = [];
       if (usbVendor.length === 1) {
         usbProduct = usbVendor[0].devices.filter(
-          (item) => parseInt(item.devid, 16) === usbProductId
+          (item) => {
+            return parseInt(item.devid, 16) === usbProductId
+          }
+        );
+      }
+      if(usbProduct.length === 0) {
+        return (
+          <Option value={index} key={index}>
+            未知设备({index})
+          </Option>
         );
       }
       return (
