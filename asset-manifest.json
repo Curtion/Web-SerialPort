@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Web-SerialPort/static/css/main.1fe0d020.chunk.css",
-    "main.js": "/Web-SerialPort/static/js/main.16a894a3.chunk.js",
-    "main.js.map": "/Web-SerialPort/static/js/main.16a894a3.chunk.js.map",
+    "main.js": "/Web-SerialPort/static/js/main.57b8c4aa.chunk.js",
+    "main.js.map": "/Web-SerialPort/static/js/main.57b8c4aa.chunk.js.map",
     "runtime-main.js": "/Web-SerialPort/static/js/runtime-main.4f825e84.js",
     "runtime-main.js.map": "/Web-SerialPort/static/js/runtime-main.4f825e84.js.map",
     "static/css/2.b1cac1c8.chunk.css": "/Web-SerialPort/static/css/2.b1cac1c8.chunk.css",
@@ -20,6 +20,6 @@
     "static/css/2.b1cac1c8.chunk.css",
     "static/js/2.9aec85ea.chunk.js",
     "static/css/main.1fe0d020.chunk.css",
-    "static/js/main.16a894a3.chunk.js"
+    "static/js/main.57b8c4aa.chunk.js"
   ]
 }
